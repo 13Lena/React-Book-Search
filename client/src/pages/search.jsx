@@ -5,9 +5,28 @@ import BookResult from "../components/bookList";
 
 function Search() {
   const [bookInput, setBookInput] = React.useState("");
+  const [books, setBooks] = React.useState([]);
   const handleChange = e => setBookInput(e.target.value);
   const handleSearchClick = async e => {
     const response = await API.searchBooks(bookInput);
+    // debugger;
+    setBooks(
+      response.data.map(
+        ({
+          volumeInfo: {
+            title,
+            authors,
+            description,
+            imageLinks: { thumbnail }
+          }
+        }) => ({
+          title,
+          author: (authors || [])[0] || "",
+          summary: description,
+          image: thumbnail
+        })
+      )
+    );
     // debugger;
   };
 
@@ -18,7 +37,7 @@ function Search() {
         handleSearchClick={handleSearchClick}
       />
 
-      <BookResult />
+      <BookResult books={books} />
     </main>
   );
 }
