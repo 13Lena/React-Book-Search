@@ -8,7 +8,7 @@ function Search() {
   const handleChange = e => setBookInput(e.target.value);
   const handleSearchClick = async e => {
     const response = await API.searchBooks(bookInput);
-    debugger;
+    // debugger;
   };
 
   return (
